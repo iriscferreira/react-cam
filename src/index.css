@@ -6,9 +6,14 @@
 }
 
 .App {
-  min-height: 100vh;
+  min-height: 100vh; 
   position: relative;
-  background-color: #313131;
+  background-color: #555555;
+  display: center;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+
 }
 
 .camera {
@@ -23,7 +28,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(219, 211, 211, 0.9);
   transition: 0.4s;
 }
 
@@ -36,6 +41,26 @@ video {
   width: 100%;
   max-width: 100%;
   height: auto;
+}
+
+.buttonStart{
+  position: relative;
+  bottom: 20px;
+  left: 20px;
+  margin: 50px;
+
+  appearance: none;
+  border: none;
+  outline: none;
+
+  padding: 8px 16px;
+  background-image: linear-gradient(to right, #844FFF 50%, #4fffb9 50%);
+  background-size: 200%;
+  color: #FFF;
+  font-size: 24px;
+  font-weight: 700;
+  transition: 0.4s;
+  cursor: pointer;
 }
 
 
