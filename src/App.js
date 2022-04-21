@@ -1,12 +1,27 @@
 import React, { useRef, useEffect, useState } from "react";
+import api from "./services/api";
 
 
 function App() {
+  const [user, setUser] = useState();
 
   const videoRef = useRef(null);
   const photoRef = useRef(null);
 
   const [hasPhoto, setHasPhoto] = useState(false);
+
+  const callApi = () => {
+    api
+    .get("/users/romulo27")
+    .then(response => {
+      console.log('response', response)
+      setUser(response.data)
+    })
+    .catch((err) => {
+      console.error("ops! ocorreu um erro" + err);
+    });
+
+  }
 
   const getVideo = () => {
     navigator.mediaDevices.getUserMedia(
@@ -48,10 +63,16 @@ function App() {
   }
 
   useEffect(() => {
+    callApi();
+
     getVideo();
   }, [videoRef])
+
+
   return (
     <div className="App">
+       <p>Usuário: {user?.login}</p>
+      <p>Biografia: {user?.bio}</p>
       <div className="camera"></div>
       <video ref={videoRef}></video>
       <button onClick={takePhoto}>SNAP</button>
