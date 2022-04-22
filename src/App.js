@@ -14,8 +14,13 @@ function App() {
   const callApi = () => {
 
     let config = {
-      headers: { 'Access-Control-Allow-Origin': '*'}
+      headers: { 
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      },
     }
+
+   
 
     var headers = { 'Access-Control-Allow-Origin': '*'};
 
