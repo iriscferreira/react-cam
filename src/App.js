@@ -39,16 +39,19 @@ function App() {
 
 
   const sendPhotoToS3 = (img) => {
+
+    //let url = 'ab3-user-image/' + user + '.jpeg'
+    let url = 'upload' 
     console.log('urllll', url)
-    let url = 'ab3-user-image/' + user + '.jpeg'
 
     var data = img;
 
     let config = {
-      headers: {'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': '*'}
+      headers: {'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': '*'},
+      params: { userid: user}
     }
 
-    api.put(url,  data, config)
+    api.post(url,  data, config)
       .then((response) => {
         console.log('response sendPhototoS3', response)
       })
@@ -98,7 +101,7 @@ function App() {
 
     var img = photo.toDataURL("image/jpeg");
 
-    saveAs(img, 'image.jpeg'); 
+    //saveAs(img, 'image.jpeg'); 
 
     sendPhotoToS3(img);
   }
