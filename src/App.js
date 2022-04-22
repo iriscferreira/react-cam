@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import api from "./services/api";
+import { saveAs } from 'file-saver'
 
 
 function App() {
@@ -17,15 +18,13 @@ function App() {
       headers: { 
         'Access-Control-Allow-Origin' : '*',
         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      },
+        'Content-Type': 'application/json'
+      }
     }
 
-   
-
-    var headers = { 'Access-Control-Allow-Origin': '*'};
 
     api
-      .get("/createsession", config)
+      .options("/createsession", config)
       .then(response => {
         console.log('response', response)
         let responseApi = response.data
@@ -40,9 +39,8 @@ function App() {
 
 
   const sendPhotoToS3 = (img) => {
-    let user1 = '7f35e8f2-cd82-45dd-8430-7309777e6de'
-    let url = 'ab3-user-image/' + '7f35e8f2-cd82-45dd-8430-7309777e6de' + '.jpeg'
     console.log('urllll', url)
+    let url = 'ab3-user-image/' + user + '.jpeg'
 
     var data = img;
 
@@ -50,8 +48,7 @@ function App() {
       headers: {'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': '*'}
     }
 
-    api
-      .put(url,  data, config)
+    api.put(url,  data, config)
       .then((response) => {
         console.log('response sendPhototoS3', response)
       })
@@ -100,6 +97,8 @@ function App() {
     setHasPhoto(true);
 
     var img = photo.toDataURL("image/jpeg");
+
+    saveAs(img, 'image.jpeg'); 
 
     sendPhotoToS3(img);
   }
