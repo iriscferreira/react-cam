@@ -12,8 +12,15 @@ function App() {
   const [hasPhoto, setHasPhoto] = useState(false);
 
   const callApi = () => {
+
+    let config = {
+      headers: { 'Access-Control-Allow-Origin': '*'}
+    }
+
+    var headers = { 'Access-Control-Allow-Origin': '*'};
+
     api
-      .get("/createsession")
+      .get("/createsession", config)
       .then(response => {
         console.log('response', response)
         let responseApi = response.data
@@ -27,13 +34,22 @@ function App() {
   }
 
 
-  const sendPhotoToS3 = () => {
+  const sendPhotoToS3 = (img) => {
+    let user1 = '7f35e8f2-cd82-45dd-8430-7309777e6de'
+    let url = 'ab3-user-image/' + '7f35e8f2-cd82-45dd-8430-7309777e6de' + '.jpeg'
+    console.log('urllll', url)
+
+    var data = img;
+
+    let config = {
+      headers: {'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': '*'}
+    }
+
     api
-      .post("https://minhaapi/novo-usuario", {
-        nome: "Romulo",
-        sobrenome: "Sousa"
+      .put(url,  data, config)
+      .then((response) => {
+        console.log('response sendPhototoS3', response)
       })
-      .then((response) => setUser(response.data))
       .catch((err) => {
         console.error("ops! ocorreu um erro" + err);
       });
@@ -78,7 +94,9 @@ function App() {
     ctx.drawImage(video, 0, 0, width, height);
     setHasPhoto(true);
 
-    sendPhotoToS3();
+    var img = photo.toDataURL("image/jpeg");
+
+    sendPhotoToS3(img);
   }
 
   const closePhoto = () => {
@@ -96,7 +114,7 @@ function App() {
 
 
   return (
-    <div className="App">      
+    <div className="App">
 
       {user ? getVideo() : <button className="buttonStart" onClick={callApi}>INICIAR</button>}
 
