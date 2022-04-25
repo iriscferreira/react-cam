@@ -47,11 +47,11 @@ function App() {
     var data = img;
 
     let config = {
-      headers: {'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': '*'},
+      headers: {'Content-Type': 'image/png', 'Access-Control-Allow-Origin': '*'},
       params: { userid: user}
     }
 
-    api.post(url,  data, config)
+    api.post(url,  data, config, {headers: {'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': '*'}})
       .then((response) => {
         console.log('response sendPhototoS3', response)
       })
@@ -99,9 +99,9 @@ function App() {
     ctx.drawImage(video, 0, 0, width, height);
     setHasPhoto(true);
 
-    var img = photo.toDataURL("image/jpeg");
+    var img = photo.toDataURL("image/png");
 
-    //saveAs(img, 'image.jpeg'); 
+    saveAs(img, 'image.png'); 
 
     sendPhotoToS3(img);
   }
